@@ -8,10 +8,10 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <script src="jquery-1.10.2.min.js"></script>
-        <script src='https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js'></script>
+        <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
     </head>
-    <body>       
-    	<div id="myPublisherDiv"></div>
+    <body>           	
+    	<div id="subscriberContainer"></div>
     </body>            
     <script type="text/javascript">
       // Initialize API key, session, and token...
@@ -21,14 +21,25 @@
       var sessionId = "1_MX40NDkzNTMwMn5-RnJpIEF1ZyAwOCAxODo1ODowOSBQRFQgMjAxNH4wLjA5MTQxMzAyfn4";
       var token = "T1==cGFydG5lcl9pZD00NDkzNTMwMiZzaWc9M2IwNTAyOWYwNjdmNDVlYjAzZjc1NDMwMDY2N2UyNThjZTUxMmUzNTpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5Ea3pOVE13TW41LVJuSnBJRUYxWnlBd09DQXhPRG8xT0Rvd09TQlFSRlFnTWpBeE5INHdMakE1TVRReE16QXlmbjQmY3JlYXRlX3RpbWU9MTQwNzU0OTQ4OSZub25jZT0wLjM5NDg3NjEzMTg3OTcxMzgmZXhwaXJlX3RpbWU9MTQwNzYzNTg4OQ==";
 
-      // Initialize session, set up event listeners, and connect
-      var session = TB.initSession(sessionId);
-      session.addEventListener('sessionConnected', sessionConnectedHandler);
-      session.connect(apiKey, token);
-      
-      function sessionConnectedHandler(event) {
-        var publisher = TB.initPublisher(apiKey, 'myPublisherDiv');
-        session.publish(publisher);
-      }
+      	var session = TB.initSession(sessionId);
+      	session.connect(apiKey, token);
+
+      	session.on("streamCreated", function(event) {
+		    session.subscribe(event.stream);
+		});
+		 
+		// Replace with your API key and token:
+		session.connect(token, function (error) {		
+		});
+
+		var subscriberProperties = {insertMode: "append"};
+			var subscriber = session.subscribe(stream, 'subscriberContainer', subscriberProperties, function (error) {
+			  if (error) {
+			    console.log(error);
+			  } else {
+			    console.log("Subscriber added.");
+			  }
+		});
+
     </script>
 </html>
