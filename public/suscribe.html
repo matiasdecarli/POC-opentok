@@ -11,7 +11,8 @@
         <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
     </head>
     <body>           	
-    	<div id="subscriberContainer"></div>
+    	<div id="subscriberContainer">        
+      </div>
     </body>            
     <script type="text/javascript">
       // Initialize API key, session, and token...
@@ -33,7 +34,9 @@
 		});
 
 		var subscriberProperties = {insertMode: "append"};
-			var subscriber = session.subscribe(stream, 'subscriberContainer', subscriberProperties, function (error) {
+      var hash = Math.random().toString(36).substring(7);
+      $("#subscriberContainer").append("<div id=" + hash +">foo</div>")
+			var subscriber = session.subscribe(stream, hash, subscriberProperties, function (error) {
 			  if (error) {
 			    console.log(error);
 			  } else {
