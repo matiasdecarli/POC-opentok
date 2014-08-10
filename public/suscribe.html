@@ -11,8 +11,7 @@
         <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
     </head>
     <body>           	
-    	<div id="subscriberContainer">        
-      </div>
+    	<div id="subscriberContainer"></div>
     </body>            
     <script type="text/javascript">
       // Initialize API key, session, and token...
@@ -20,29 +19,26 @@
       // Sessions and tokens are generated on your server and passed down to the client
       var apiKey = "44935302";
       var sessionId = "2_MX40NDkzNTMwMn5-U3VuIEF1ZyAxMCAxMTowMjoxOCBQRFQgMjAxNH4wLjU3MjQxMjd-fg";
-      var token = "T1==cGFydG5lcl9pZD00NDkzNTMwMiZzaWc9MjA3YTA0NzFlOTQ1M2I0YzhhNzRlNmMyYTdhYzE0YTlkOGUzZjZmNjpyb2xlPXN1YnNjcmliZXImc2Vzc2lvbl9pZD0yX01YNDBORGt6TlRNd01uNS1VM1Z1SUVGMVp5QXhNQ0F4TVRvd01qb3hPQ0JRUkZRZ01qQXhOSDR3TGpVM01qUXhNamQtZmcmY3JlYXRlX3RpbWU9MTQwNzY5Mzc2MCZub25jZT0wLjQ3MTAxMjU1MzQ4MzgxOTc2JmV4cGlyZV90aW1lPTE0MDc2OTczMjk=";
+      var token = "T1==cGFydG5lcl9pZD00NDkzNTMwMiZzaWc9ZTZkMDQ1YzI5ZjFlZmMzNjMyYjc2MzBiNDdhOWM2ZDQyOWRhYzAxZjpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTJfTVg0ME5Ea3pOVE13TW41LVUzVnVJRUYxWnlBeE1DQXhNVG93TWpveE9DQlFSRlFnTWpBeE5INHdMalUzTWpReE1qZC1mZyZjcmVhdGVfdGltZT0xNDA3Njk0OTQxJm5vbmNlPTAuNjMwNDA0NDExMDE0OTc4OSZleHBpcmVfdGltZT0xNDA3Njk3MzI5";
 
-      	var session = TB.initSession(sessionId);
-      	session.connect(apiKey, token);
+      var session = TB.initSession(sessionId);
+        session.connect(apiKey, token);
 
-      	session.on("streamCreated", function(event) {
-		    session.subscribe(event.stream);
-		});
-		 
-		// Replace with your API key and token:
-		session.connect(token, function (error) {		
-		});
-
-		var subscriberProperties = {insertMode: "append"};
-      var hash = Math.random().toString(36).substring(7);
-      $("#subscriberContainer").append("<div id=" + hash +"></div>")
-			var subscriber = session.subscribe(stream, hash, subscriberProperties, function (error) {
-			  if (error) {
-			    console.log(error);
-			  } else {
-			    console.log("Subscriber added.");
-			  }
-		});
+      session.on("streamCreated", function(event) {
+          session.subscribe(event.stream);
+          var subscriberProperties = {insertMode: "append"};
+          var subscriber = session.subscribe(stream, 'subscriberContainer', subscriberProperties, function (error){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Subscriber added.");
+            }
+          });
+      });
+     
+      // Replace with your API key and token:
+      session.connect(token, function (error) {   
+      });      
 
     </script>
 </html>
