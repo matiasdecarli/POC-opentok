@@ -27,7 +27,7 @@
       session.on("streamCreated", function(event) {
           session.subscribe(event.stream);
           var subscriberProperties = {insertMode: "append"};
-          var subscriber = session.subscribe(stream, 'subscriberContainer', subscriberProperties, function (error){
+          var subscriber = session.subscribe(event.stream, 'subscriberContainer', subscriberProperties, function (error){
             if (error) {
               console.log(error);
             } else {
