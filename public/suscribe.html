@@ -25,7 +25,7 @@
         session.connect(apiKey, token);
 
       session.on("streamCreated", function(event) {
-          session.subscribe(event.stream);
+          //session.subscribe(event.stream);
           var subscriberProperties = {insertMode: "append"};
           var subscriber = session.subscribe(event.stream, 'subscriberContainer', subscriberProperties, function (error){
             if (error) {
