@@ -22,12 +22,14 @@
       var token = "T1==cGFydG5lcl9pZD00NDkzNTMwMiZzaWc9MTMwYTA5ODJkYWNkZWRhNzA2ZDJmY2Q4NjYyNzI4OTNmODQ4NDI5NTpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5Ea3pOVE13TW41LVUzVnVJRUYxWnlBeE1DQXhNam95TWpveE9DQlFSRlFnTWpBeE5INHdMakUxTVRZek9Ea3pmbjQmY3JlYXRlX3RpbWU9MTQwNzY5ODU1OCZub25jZT0wLjc2ODM2MTQ1Mjg1MDg2MDcmZXhwaXJlX3RpbWU9MTQxMDI4OTgyMA==";
 
       // Initialize session, set up event listeners, and connect
+      var pubOptions = {publishAudio:true, publishVideo:false};
       var session = TB.initSession(sessionId);
+      // console.log(session);
       session.addEventListener('sessionConnected', sessionConnectedHandler);
       session.connect(apiKey, token);
       
       function sessionConnectedHandler(event) {
-        var publisher = TB.initPublisher(apiKey, 'myPublisherDiv');
+        var publisher = TB.initPublisher(apiKey, 'myPublisherDiv', pubOptions);
         session.publish(publisher);
       }
     </script>
