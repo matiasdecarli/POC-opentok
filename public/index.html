@@ -8,29 +8,32 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <script src="jquery-1.10.2.min.js"></script>
-        <script src='https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js'></script>
+        <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
     </head>
     <body>       
+      <button id="connect">Connect</button>
     	<div id="myPublisherDiv"></div>
+      <div id="subscriberContainer"></div>
     </body>            
     <script type="text/javascript">
       // Initialize API key, session, and token...
       // Think of a session as a room, and a token as the key to get in to the room
       // Sessions and tokens are generated on your server and passed down to the client
       var apiKey = "44935302";
-      var sessionId = "1_MX40NDkzNTMwMn5-U3VuIEF1ZyAxMCAxMjoyMjoxOCBQRFQgMjAxNH4wLjE1MTYzODkzfn4";
-      var token = "T1==cGFydG5lcl9pZD00NDkzNTMwMiZzaWc9MTMwYTA5ODJkYWNkZWRhNzA2ZDJmY2Q4NjYyNzI4OTNmODQ4NDI5NTpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5Ea3pOVE13TW41LVUzVnVJRUYxWnlBeE1DQXhNam95TWpveE9DQlFSRlFnTWpBeE5INHdMakUxTVRZek9Ea3pmbjQmY3JlYXRlX3RpbWU9MTQwNzY5ODU1OCZub25jZT0wLjc2ODM2MTQ1Mjg1MDg2MDcmZXhwaXJlX3RpbWU9MTQxMDI4OTgyMA==";
-
-      // Initialize session, set up event listeners, and connect
-      var pubOptions = {publishAudio:true, publishVideo:false};
-      var session = TB.initSession(sessionId);
-      // console.log(session);
-      session.addEventListener('sessionConnected', sessionConnectedHandler);
-      session.connect(apiKey, token);
+      var sessionId = "1_MX40NDkzNTMwMn5-TW9uIEF1ZyAxMSAwNjo0OTowMSBQRFQgMjAxNH4wLjgxMjQ0NTJ-fg";
+      var token = "T1==cGFydG5lcl9pZD00NDkzNTMwMiZzaWc9Njk0YjcwOGU3MjBhZTc5MjU4NGEwMjdjM2Q2MTk5OWNlZjY1YjliZTpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5Ea3pOVE13TW41LVRXOXVJRUYxWnlBeE1TQXdOam8wT1Rvd01TQlFSRlFnTWpBeE5INHdMamd4TWpRME5USi1mZyZjcmVhdGVfdGltZT0xNDA3NzY0OTQ0Jm5vbmNlPTAuNDg0NjE5OTczMDUxNTY5OCZleHBpcmVfdGltZT0xNDEwMzU2OTE4";
       
-      function sessionConnectedHandler(event) {
-        var publisher = TB.initPublisher(apiKey, 'myPublisherDiv', pubOptions);
-        session.publish(publisher);
-      }
+      var session = OT.initSession(apiKey, sessionId);
+         
+      session.on("streamCreated", function(event) {
+        session.subscribe(event.stream);
+      });    
+
+      $("#connect").click(function(){
+          session.connect(token, function(error) {
+            var publisher = OT.initPublisher();
+            session.publish(publisher);
+          });
+      });         
     </script>
 </html>
